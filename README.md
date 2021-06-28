@@ -2,7 +2,9 @@
 
 An interactive web application which could recognize music emotion and themes using one of three pretrained models and return the probability in percentages.
 
-## First steps
+The project was influenced by the task "Emotions and Themes in Music" of **[MediaEval](https://multimediaeval.github.io/about/)**.
+
+## The first steps
 
 - Clone this repo 
 - Install requirements
