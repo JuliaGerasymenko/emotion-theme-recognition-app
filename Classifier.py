@@ -13,12 +13,16 @@ class Classifier:
         self.IMG_WIDTH = 7409
         self. CLASS_COUNT = 56
         self.batch_size = 32
-        self.path = os.path.join('/mnt/diploma/Emotion-and-Theme-Recognition-in-Music-Task/' 'data', 'data')
+        self.model = None
 
+    def create_model(self):
+        pass
+
+    def train(self, path_to_data):
+        self.path = path_to_data
         self.train_dir = os.path.join(self.path, 'train')
         self.validation_dir = os.path.join(self.path, 'validation')
         self.subdirs = os.listdir(self.validation_dir)
-        self.CLASS_COUNT = 56
         self.arr_images_num = []
 
         for total in [self.train_dir, self.validation_dir]:
@@ -27,13 +31,8 @@ class Classifier:
                 for img in os.listdir(os.path.join(total, tag_folder)):
                     filename_num += 1
             self.arr_images_num.append(filename_num)
-        self.model = None
-
-    def create_model(self):
-        pass
-
-    def train(self):
         self.model.trainable = False
+        
         self.train_image_generator = ImageDataGenerator(rotation_range=0,
                                                         width_shift_range=0.6,
                                              horizontal_flip=True)

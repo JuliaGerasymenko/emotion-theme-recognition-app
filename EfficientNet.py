@@ -32,10 +32,10 @@ class EfficientNet(Classifier):
                       optimizer=opt,
                       metrics=['accuracy'])
 
-    def train(self):
+    def train(self, path_to_data, epoch_num = 10):
         super().train(self.model)
         hst = self.model.fit_generator(generator=self.train_data_gen,
-                                  epochs=10,
+                                  epochs=epoch_num,
                                   validation_steps=self.arr[1] // self.batch_size,
                                   steps_per_epoch=self.arr[0] // self.batch_size,
                                   validation_data=self.val_data_gen,

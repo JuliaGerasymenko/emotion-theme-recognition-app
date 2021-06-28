@@ -35,7 +35,8 @@ CONST_LABELS_DICT = {
 
 class Model(Classifier):
 
-    def __init__(self, model_name, train_bool):
+    def __init__(self, model_name, train_bool, path_to_data, epoch_num):
+        # '/mnt/diploma/Emotion-and-Theme-Recognition-in-Music-Task/data/data'
         __models_dict = {
                 'ResNet50': ResNet50(),
                 'EfficientNet': EfficientNet(),
@@ -47,7 +48,7 @@ class Model(Classifier):
 
             if self._train_bool:
                 self.model.create_model()
-                self.model = self.model.train()
+                self.model = self.model.train(path_to_data, epoch_num)
         else:
             print('invalid model name was declared')
 
@@ -108,19 +109,23 @@ if __name__ == '__main__':
     # Serve the app with gevent
     __model_names = ['ResNet50', 'InceptionResNetV2', 'EfficientNet']
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', help="please choose the index of the model which you require to use ['ResNet50','InceptionResNetV2', 'EfficientNet']. The models ordered from the best to the worst.")
+    parser.add_argument('model', help="choose the index(number) of the model which you require to use ['ResNet50','InceptionResNetV2', 'EfficientNet']. The models ordered from the best to the worst.")
+    parser.add_argument('train_bool', help="do you want to train the model. Pass `Yes` or `No`")
+    parser.add_argument('--data_path', help="put the pass if you want to train models using the data stored in `data_path` directory. This directory shoode have train, validation forlders with data.")
+    parser.add_argument('--epoch_num', help="if you want to train your model define the num of epoch. The default value equals 10")
     args = parser.parse_args()
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print('You have specified a less number of arguments')
         sys.exit()
-    if len(sys.argv) > 3:
+    if len(sys.argv) > 7:
         print('You have specified an extra number of arguments')
         sys.exit()
     args.model = int(args.model)
     if args.model > 2 or args.model < 0:
         print("You choose incorrect index for required model. Please try again and choose the index from 0 to 2 included")
         sys.exit()
-    model = Model(__model_names[args.model], False)
+    train_bool = True if args.model == 'Yes' else False
+    model = Model(__model_names[args.model], train_bool, args.data_path, args.epoch_num)
 
     http_server = WSGIServer(('0.0.0.0', 5003), app)
     http_server.serve_forever()
