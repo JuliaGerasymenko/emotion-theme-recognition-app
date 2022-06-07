@@ -14,7 +14,6 @@ The project was influenced by the task "Emotions and Themes in Music" of **[Medi
   <img src="https://user-images.githubusercontent.com/31742528/123638983-6e8da480-d828-11eb-9b87-85cd8335d7a9.png" height="300px" alt="">
 </p>
 
-- Go to http://localhost:5003
 
 :point_down: Screenshot:
 <p align="center">
